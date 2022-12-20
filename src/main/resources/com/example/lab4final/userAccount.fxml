@@ -7,13 +7,12 @@
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 
-
 <AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.lab4final.controllers.UserAccount">
     <TableView fx:id="tableView" layoutX="236.0" layoutY="100.0" prefHeight="200.0" prefWidth="304.0">
       <columns>
-          <TableColumn prefWidth="102.4000244140625" text="Prenume" />
-          <TableColumn prefWidth="98.39996337890625" text="Nume" />
-          <TableColumn prefWidth="103.20001220703125" text="Email" />
+          <TableColumn fx:id="Prenume" prefWidth="102.4000244140625" text="Prenume" />
+          <TableColumn fx:id="Nume" prefWidth="98.39996337890625" text="Nume" />
+          <TableColumn fx:id="Email" prefWidth="103.20001220703125" text="Email" />
       </columns>
     </TableView>
     <ImageView fitHeight="183.0" fitWidth="195.0" layoutX="14.0" layoutY="33.0" pickOnBounds="true" preserveRatio="true">
@@ -22,6 +21,6 @@
         </image>
     </ImageView>
     <Button fx:id="myFriends" layoutX="236.0" layoutY="300.0" mnemonicParsing="false" onMouseClicked="#showMyFriends" prefHeight="26.0" prefWidth="86.0" text="My Friends" />
-    <Button layoutX="336.0" layoutY="301.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="110.0" text="Potential Friends" />
-    <Button layoutX="457.0" layoutY="302.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="86.0" text="Requests" />
+    <Button fx:id="myUnfriends" layoutX="336.0" layoutY="301.0" mnemonicParsing="false" onMouseClicked="#showMyUnfriends" prefHeight="26.0" prefWidth="110.0" text="Potential Friends" />
+    <Button fx:id="myRequests" layoutX="457.0" layoutY="302.0" mnemonicParsing="false" onMouseClicked="#showRequests" prefHeight="26.0" prefWidth="86.0" text="Requests" />
 </AnchorPane>

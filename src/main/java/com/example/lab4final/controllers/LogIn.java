@@ -34,16 +34,12 @@ public class LogIn {
             for(User user:serviceUser.getAll()){
                 if(Objects.equals(user.getEmail(), emailUser) && Objects.equals(user.getParola(), parolaUser)){
                     ok = 2;
-                    UserAccount userAccount = new UserAccount();
-                    userAccount.setUserlogged(user);
                     FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("userAccount.fxml"));
-                    System.out.println("lol");
                     Scene scene = new Scene(fxmlLoader.load(),600,600);
-                    System.out.println("lol1");
                     Stage stage = new Stage();
-                    System.out.println("lol2");
                     stage.setScene(scene);
-                    System.out.println("lol3");
+                    UserAccount userAccount = fxmlLoader.getController();
+                    userAccount.setUserlogged(user);
                     stage.show();
                     break;
                 }
