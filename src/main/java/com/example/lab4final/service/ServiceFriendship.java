@@ -8,6 +8,7 @@ import com.example.lab4final.repository.Repository;
 import com.example.lab4final.repository.dbrepo.FriendshipDbRepository;
 
 import java.util.List;
+import java.util.Objects;
 
 public class ServiceFriendship{
     FriendshipValidator friendshipValidator = new FriendshipValidator();
@@ -26,7 +27,7 @@ public class ServiceFriendship{
 
     public void addElem(Friendship friendship) {
         for(Friendship friendship1: friendshipRepository.findAll()){
-            if((friendship1.getId() == friendship.getId() || (friendship1.getIdUser1() == friendship.getIdUser1() && friendship1.getIdUser2()==friendship.getIdUser2()) || (friendship1.getIdUser1() == friendship.getIdUser2() && friendship1.getIdUser2()==friendship.getIdUser1()))){
+            if((Objects.equals(friendship1.getId(), friendship.getId()) || (friendship1.getIdUser1() == friendship.getIdUser1() && friendship1.getIdUser2()==friendship.getIdUser2()) || (friendship1.getIdUser1() == friendship.getIdUser2() && friendship1.getIdUser2()==friendship.getIdUser1()))){
                 throw new ValidationException("Aceasta prietenie exista deja!");
             }
         }
@@ -40,7 +41,7 @@ public class ServiceFriendship{
             if(k<friendship.getId())
                 k= friendship.getId();
         }
-        return k;
+        return k+1;
     }
 
     public Friendship getById(int id){
@@ -53,6 +54,11 @@ public class ServiceFriendship{
 
     public List<Friendship> getAll() {
         return friendshipRepository.findAll();
+    }
+
+    public void update(Friendship entity, Friendship newEntity){
+        friendshipValidator.validate(newEntity);
+        friendshipRepository.update(entity,newEntity);
     }
 
     public void deleteElem(Friendship friendship) {

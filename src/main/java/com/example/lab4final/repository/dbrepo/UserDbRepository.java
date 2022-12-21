@@ -67,7 +67,7 @@ public class UserDbRepository implements Repository<User> {
     }
 
     @Override
-    public Optional<User> save(User entity) {
+    public void save(User entity) {
         String sql = "insert into users (id,first_name, last_name, email, parola) values (?,?,?,?,?)";
         try (Connection connection = DriverManager.getConnection(url, username, password);
              PreparedStatement ps = connection.prepareStatement(sql)) {
@@ -80,18 +80,15 @@ public class UserDbRepository implements Repository<User> {
 
             ps.executeUpdate();
         } catch (SQLException e) {
-            return Optional.ofNullable(entity);
+            System.out.println(e.getMessage());
         }
-        return Optional.empty();
     }
 
     @Override
-    public Optional<User> delete(User e) {
-        return Optional.empty();
+    public void delete(User e) {
     }
 
     @Override
-    public Optional<User> update(User entity) {
-        return Optional.empty();
+    public void update(User entity, User newEntity) {
     }
 }

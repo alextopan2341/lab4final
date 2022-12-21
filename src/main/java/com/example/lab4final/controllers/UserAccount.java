@@ -9,12 +9,15 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 
 import java.io.IOException;
 import java.net.URL;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -25,8 +28,16 @@ import java.util.stream.StreamSupport;
 public class UserAccount  implements Initializable {
     ServiceUser serviceUser = ServiceUser.getInstance();
     ServiceFriendship serviceFriendship = ServiceFriendship.getInstance();
+    @FXML
+    private Label label;
     private User userlogged;
     private ObservableList<User> model = FXCollections.observableArrayList();
+    @FXML
+    Button buttonAddFriend;
+    @FXML
+    Button buttonRequestAccepted;
+    @FXML
+    Button buttonRequestDeclined;
 
     public void setUserlogged(User userlogged1) {
         this.userlogged = userlogged1;
@@ -45,6 +56,9 @@ public class UserAccount  implements Initializable {
         Prenume.setCellValueFactory(new PropertyValueFactory<User, String>("Prenume"));
         Nume.setCellValueFactory(new PropertyValueFactory<User, String>("Nume"));
         Email.setCellValueFactory(new PropertyValueFactory<User, String>("Email"));
+        buttonAddFriend.setVisible(false);
+        buttonRequestAccepted.setVisible(false);
+        buttonRequestDeclined.setVisible(false);
         tableView.setItems(model);
     }
 
@@ -57,11 +71,40 @@ public class UserAccount  implements Initializable {
 
      @FXML
      public void showMyFriends() throws IOException {
+        buttonAddFriend.setVisible(false);
+         buttonRequestAccepted.setVisible(false);
+         buttonRequestDeclined.setVisible(false);
          initModel();
      }
 
      @FXML
+     public void addFriend(){
+        try {
+            User selectedUser = tableView.getSelectionModel().getSelectedItem();
+            Friendship friendship = new Friendship(ServiceFriendship.getInstance().getId(), userlogged.getId(), selectedUser.getId(), new Timestamp(System.currentTimeMillis()),"pending");
+            serviceFriendship.addElem(friendship);
+            showMyUnfriends();
+        }
+        catch (Exception e){
+            label.setText(e.getMessage());
+        }
+     }
+
+     @FXML
+     public void setButtonRequestAccepted() throws IOException {
+        User selectedUser = tableView.getSelectionModel().getSelectedItem();
+        for(Friendship friendship:serviceFriendship.getAll()){
+            if((userlogged.getId() == friendship.getIdUser1() && selectedUser.getId() == friendship.getIdUser2()) || (selectedUser.getId() == friendship.getIdUser1() && userlogged.getId() == friendship.getIdUser2()))
+                serviceFriendship.update(friendship,new Friendship(friendship.getId(),userlogged.getId(),selectedUser.getId(),new Timestamp(System.currentTimeMillis()),"accepted"));
+        }
+        showRequests();
+     }
+
+     @FXML
      public void showMyUnfriends() throws IOException{
+         buttonAddFriend.setVisible(true);
+         buttonRequestAccepted.setVisible(false);
+         buttonRequestDeclined.setVisible(false);
          ArrayList<User> list = unfriends();
          List<User> user = StreamSupport.stream(list.spliterator(),false)
                  .collect(Collectors.toList());
@@ -70,6 +113,9 @@ public class UserAccount  implements Initializable {
 
      @FXML
      public void showRequests() throws IOException{
+         buttonAddFriend.setVisible(false);
+         buttonRequestAccepted.setVisible(true);
+         buttonRequestDeclined.setVisible(true);
         ArrayList<User> list = requests();
          List<User> user = StreamSupport.stream(list.spliterator(),false)
                  .collect(Collectors.toList());
@@ -98,9 +144,9 @@ public class UserAccount  implements Initializable {
         ArrayList<User> myRequests = new ArrayList<>();
         for(Friendship friendship: serviceFriendship.getAll()){
             if(Objects.equals(friendship.getStatus(), "pending")){
-                if (friendship.getIdUser1() == userlogged.getId()) {
-                    myRequests.add(serviceUser.getById(friendship.getIdUser2()));
-                }
+                //if (friendship.getIdUser1() == userlogged.getId()) {
+                //    myRequests.add(serviceUser.getById(friendship.getIdUser2()));
+                //}
                 if(friendship.getIdUser2() == userlogged.getId()){
                     myRequests.add(serviceUser.getById(friendship.getIdUser1()));
                 }

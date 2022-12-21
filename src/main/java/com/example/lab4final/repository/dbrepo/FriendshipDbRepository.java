@@ -67,8 +67,8 @@ public class FriendshipDbRepository implements Repository<Friendship> {
     }
 
     @Override
-    public Optional<Friendship> save(Friendship entity) {
-        String sql = "insert into friendships(id,id_User1,id_User2,status) values (?,?,?,?)";
+    public void save(Friendship entity) {
+        String sql = "insert into friendships(id,id_User1,id_User2,date,status) values (?,?,?,?,?)";
         try (Connection connection = DriverManager.getConnection(url, username, password);
              PreparedStatement ps = connection.prepareStatement(sql)) {
 
@@ -80,18 +80,28 @@ public class FriendshipDbRepository implements Repository<Friendship> {
 
             ps.executeUpdate();
         } catch (SQLException e) {
-            return Optional.ofNullable(entity);
+            System.out.println(e.getMessage());
         }
-        return Optional.empty();
     }
 
     @Override
-    public Optional<Friendship> delete(Friendship friendship) {
-        return Optional.empty();
+    public void delete(Friendship friendship) {
+
     }
 
     @Override
-    public Optional<Friendship> update(Friendship entity) {
-        return Optional.empty();
+    public void update(Friendship entity, Friendship newEntity) {
+        String sql = "UPDATE friendships SET id_user1 = (?), id_user2 = (?), status = (?) WHERE id :: int=  (?)";
+        try (Connection connection = DriverManager.getConnection(url, username, password);
+             PreparedStatement ps = connection.prepareStatement(sql)) {
+            ps.setInt(1, newEntity.getIdUser1());
+            ps.setInt(2, newEntity.getIdUser2());
+            ps.setString(3, newEntity.getStatus());
+            ps.setInt(4,entity.getId());
+            ps.executeUpdate();
+        }
+        catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 }

@@ -2,7 +2,6 @@ package com.example.lab4final.repository;
 
 
 import com.example.lab4final.domain.User;
-import com.example.lab4final.domain.User;
 import com.example.lab4final.domain.Validator.ValidationException;
 
 import java.util.List;
@@ -37,17 +36,11 @@ public interface Repository<E> {
     List<E> findAll();
 
     /**
-     *
-     * @param entity
-     *         entity must be not null
-     * @return an {@code Optional} - null if the entity was saved,
-     *                             - the entity (id already exists)
-     * @throws ValidationException
-     *            if the entity is not valid
-     * @throws IllegalArgumentException
-     *             if the given entity is null.     *
+     * @param entity entity must be not null
+     * @throws ValidationException      if the entity is not valid
+     * @throws IllegalArgumentException if the given entity is null.     *
      */
-    Optional<E> save(E entity);
+    public void save(E entity);
 
 
     /**
@@ -60,7 +53,7 @@ public interface Repository<E> {
      * @throws IllegalArgumentException
      *                   if the given id is null.
      */
-    Optional<E> delete(E e);
+    public void delete(E e);
 
     /**
      *
@@ -74,7 +67,7 @@ public interface Repository<E> {
      * @throws ValidationException
      *             if the entity is not valid.
      */
-    Optional<E> update(E entity);
+    public void update(E entity, E newEntity);
 
 }
 
