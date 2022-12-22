@@ -20,7 +20,6 @@ public class LogIn {
     ServiceUser serviceUser = ServiceUser.getInstance();
     @FXML
     private Label label;
-
     @FXML
     private TextField email;
     @FXML

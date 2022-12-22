@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
 <?import javafx.scene.control.PasswordField?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.effect.Glow?>
@@ -31,7 +32,8 @@
          </effect>
       </TextField>
       <PasswordField fx:id="parola" layoutX="67.0" layoutY="277.0" prefHeight="26.0" prefWidth="226.0" text="Parola" />
-      <PasswordField fx:id="parolaToVerify" layoutX="67.0" layoutY="324.0" prefHeight="26.0" prefWidth="226.0" text="ParolaToVerify" />
+      <PasswordField fx:id="parolatoVerify" layoutX="67.0" layoutY="324.0" prefHeight="26.0" prefWidth="226.0" text="ParolaToVerify" />
       <Button layoutX="386.0" layoutY="214.0" mnemonicParsing="false" onAction="#createAccount" prefHeight="26.0" prefWidth="138.0" text="Create Account" />
+      <Label fx:id="label" layoutX="342.0" layoutY="247.0" prefHeight="34.0" prefWidth="226.0" />
    </children>
 </AnchorPane>

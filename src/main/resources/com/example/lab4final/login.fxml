@@ -19,7 +19,7 @@
       <TextField fx:id="email" layoutX="139.0" layoutY="251.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="26.0" prefWidth="207.0" promptText="Email" />
       <PasswordField fx:id="parola" layoutX="139.0" layoutY="278.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="26.0" prefWidth="207.0" promptText="Parola" />
       <Button fx:id="logIn" layoutX="139.0" layoutY="320.0" mnemonicParsing="false" onAction="#login" text="Log In" />
-      <Button layoutX="448.0" layoutY="346.0" mnemonicParsing="false" onAction="#onClickCreateAccount" text="CreateAccount">
+      <Button layoutX="355.0" layoutY="320.0" mnemonicParsing="false" onAction="#onClickCreateAccount" text="CreateAccount">
          <effect>
             <Glow />
          </effect>

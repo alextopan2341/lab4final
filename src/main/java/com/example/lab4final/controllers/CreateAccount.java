@@ -22,7 +22,6 @@ public class CreateAccount {
     private TextField prenume;
     @FXML
     private TextField email;
-
     @FXML
     private PasswordField parola;
     @FXML
@@ -36,8 +35,8 @@ public class CreateAccount {
             Email = email.getText();
             Parola = parola.getText();
             ParolaToVerify = parolatoVerify.getText();
-            if(Parola!= ParolaToVerify){
-                throw new RuntimeException("Introduced passwords aren't the same! Try again to introduce them correctly!");
+            if(Parola != ParolaToVerify){
+                label.setText("Introduced passwords aren't the same! Try again to introduce them correctly!");
             }
             ServiceUser.getInstance().addElem(new User(Id,Prenume,Nume,Email,Parola));
             label.setText("Account created successfully!");
@@ -46,6 +45,4 @@ public class CreateAccount {
             label.setText(e.getMessage());
         }
         }
-
-
     }
